@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My App</title>
+
+    <style>body {
+    background-color: black;
+    color: #F8F8F2;
+    margin: 0px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #BD93F9;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: bold;
+}
+
+.btn-outline {
+    text-shadow: black 1px 0 10px;
+    --clr-font-main: hsla(0 0% 20% / 100);
+    --btn-bg-1: #8BE9FD;
+    --btn-bg-2: #BD93F9;
+    --btn-bg-color: #F8F8F2;
+    cursor: pointer;
+    padding: 0.9em 1.4em;
+    min-width: 120px;
+    min-height: 44px;
+    transition: 0.4s;
+    background-size: 280% auto;
+    background-image: linear-gradient(
+        325deg,
+        var(--btn-bg-2) 0%,
+        var(--btn-bg-1) 55%,
+        var(--btn-bg-2) 90%
+    );
+    border: none;
+    color: var(--btn-bg-color);
+    box-shadow:
+        0px 0px 20px rgba(71, 184, 255, 0.5),
+        0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+        inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+        inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+}
+
+.btn-outline:hover {
+    background-position: right top;
+}
+
+.btn-outline:is(:focus, :focus-visible, :active) {
+    outline: none;
+    box-shadow:
+        0 0 0 3px var(--btn-bg-color),
+        0 0 0 6px var(--btn-bg-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-outline {
+        transition: linear;
+    }
+}
+
+
+.btn-round {
+    /* border: 2px solid #BD93F9; */
+    border-radius: 16px;
+}
+
+.mt-1 {
+    margin-top: 14px;
+}
+.mt-2 {
+    margin-top: 18px;
+}
+.mt-3 {
+    margin-top: 22px;
+}
+.mt-4 {
+    margin-top: 28px;
+}
+.mt-5 {
+    margin-top: 32px;
+}
+.mt-6 {
+    margin-top: 48px;
+}
+.mt-7 {
+    margin-top: 64px;
+}</style>
+</head>
+<body>
+    <div id="main-navbar">
+    <a href="/">XENA</a>
+    <a href="/blogs.html">Blog</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+</div>
+
+<style>
+#main-navbar {
+    z-index: 123123;
+    height: 64px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    top: 0px;
+    position: absolute;
+}
+
+#main-navbar a {
+    color: #F8F8F2 !important;
+    text-decoration: none;
+    font-size: 24px;
+    text-shadow: #BD93F9 1px 0 25px;
+    transition-duration: 0.2s;
+}
+#main-navbar a:hover {
+    text-shadow: #BD93F9 1px 0 10px;
+    transition-duration: 0.2s;
+}
+</style>
+
+<div
+    id="blog-container"
+>
+    <h1>Nothing Posted Yet :/</h1>
+    <h2>Come back later</h2>
+</div>
+
+<div id="footer-container">
+    <div
+        class="useful-links"
+    >
+        <div
+            class="column"
+        >
+            <h4>Social</h4>
+
+            <div
+                class="links"
+            >
+                <a href="https://x.com/XenaCyberSec">X.com</a>
+                <a href="https://www.youtube.com/@zarkones2635">Youtube</a>
+                <a href="https://github.com/zarkones">Github</a>
+                <a href="https://www.linkedin.com/company/xena-cybersec">Linkedin</a>
+            </div>
+        </div>
+
+        <div
+            class="column"
+        >
+            <h4>Support</h4>
+
+            <div
+                class="links"
+            >
+                <a href="https://discord.gg/qjJwSh2TF9">Discord</a>
+            </div>
+        </div>
+
+        <div
+            class="column"
+        >
+            <h4>Resources</h4>
+
+            <div
+                class="links"
+            >
+                <a href="/blogs">Blog</a>
+            </div>
+        </div>
+
+        <!-- <div
+            class="column"
+        >
+            <h4>About</h4>
+
+        </div> -->
+    </div>
+</div>
+
+<style>
+#footer-container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin-left: 6%;
+    margin-right: 6%;
+
+    .slot-1 {
+        border-right: 1px solid #F8F8F2;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .useful-links {
+        display: flex;
+    }
+
+    .column {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+    }
+}
+</style>
+
+<style>
+#blog-container {
+    margin: 10%;
+}
+</style>
+</body>
+</html>

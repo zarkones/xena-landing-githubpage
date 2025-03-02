@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My App</title>
+
+    <style>body {
+    background-color: black;
+    color: #F8F8F2;
+    margin: 0px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #BD93F9;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: bold;
+}
+
+.btn-outline {
+    text-shadow: black 1px 0 10px;
+    --clr-font-main: hsla(0 0% 20% / 100);
+    --btn-bg-1: #8BE9FD;
+    --btn-bg-2: #BD93F9;
+    --btn-bg-color: #F8F8F2;
+    cursor: pointer;
+    padding: 0.9em 1.4em;
+    min-width: 120px;
+    min-height: 44px;
+    transition: 0.4s;
+    background-size: 280% auto;
+    background-image: linear-gradient(
+        325deg,
+        var(--btn-bg-2) 0%,
+        var(--btn-bg-1) 55%,
+        var(--btn-bg-2) 90%
+    );
+    border: none;
+    color: var(--btn-bg-color);
+    box-shadow:
+        0px 0px 20px rgba(71, 184, 255, 0.5),
+        0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+        inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+        inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+}
+
+.btn-outline:hover {
+    background-position: right top;
+}
+
+.btn-outline:is(:focus, :focus-visible, :active) {
+    outline: none;
+    box-shadow:
+        0 0 0 3px var(--btn-bg-color),
+        0 0 0 6px var(--btn-bg-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-outline {
+        transition: linear;
+    }
+}
+
+
+.btn-round {
+    /* border: 2px solid #BD93F9; */
+    border-radius: 16px;
+}
+
+.mt-1 {
+    margin-top: 14px;
+}
+.mt-2 {
+    margin-top: 18px;
+}
+.mt-3 {
+    margin-top: 22px;
+}
+.mt-4 {
+    margin-top: 28px;
+}
+.mt-5 {
+    margin-top: 32px;
+}
+.mt-6 {
+    margin-top: 48px;
+}
+.mt-7 {
+    margin-top: 64px;
+}</style>
+</head>
+<body>
+    <div id="main-navbar">
+    <a href="/">XENA</a>
+    <a href="/blogs.html">Blog</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+</div>
+
+<style>
+#main-navbar {
+    z-index: 123123;
+    height: 64px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    top: 0px;
+    position: absolute;
+}
+
+#main-navbar a {
+    color: #F8F8F2 !important;
+    text-decoration: none;
+    font-size: 24px;
+    text-shadow: #BD93F9 1px 0 25px;
+    transition-duration: 0.2s;
+}
+#main-navbar a:hover {
+    text-shadow: #BD93F9 1px 0 10px;
+    transition-duration: 0.2s;
+}
+</style>
+
+<div id="page">
+    <div
+    id="home-image-1-container"
+>
+    <img
+        id="home-image-1"
+        src="images/xena-home-page-background-1.jpg"
+    >
+</div>
+
+<style>
+#home-image-1-container {
+    width: 100%;
+    max-height: 1080px;
+    top: 0px;
+    z-index: -10000;
+    overflow: hidden; /* Keeps particles inside the container */
+    box-shadow: inset 0 -30px 30px -30px rgba(0, 0, 0, 1);
+}
+
+#home-image-1 {
+    width: 100%;
+    height: 100%;
+    max-height: 1080px;
+    object-fit: cover; /* Ensures image fills container nicely */
+    display: block; /* Removes any unwanted spacing */
+}
+
+#home-image-1-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1080px;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+}
+
+/* Particle styles */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, rgba(189, 147, 249, 0.8) 20%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none; /* Prevents interaction with particles */
+    animation: moveParticle linear infinite;
+    z-index: 2; /* Ensures particles are above image and overlay */
+}
+
+/* Keyframes for movement and fading */
+@keyframes moveParticle {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0);
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--move-x), var(--move-y));
+    }
+}
+</style>
+
+<script>
+// Particle effect script
+const createParticles = () => {
+    const container = document.getElementById('home-image-1-container')
+    const particleCount = 20 // Adjust number of particles
+
+    // Check if image is loaded/visible
+    const img = document.getElementById('home-image-1')
+    if (!img.complete || img.naturalHeight === 0) {
+        // If image isn’t loaded yet, wait for it
+        img.onload = () => startParticleCreation(container, particleCount)
+    } else {
+        // If image is already loaded, start immediately
+        startParticleCreation(container, particleCount)
+    }
+}
+
+const startParticleCreation = (container, particleCount) => {
+    for (let i = 0; i < particleCount; i++) {
+        createSingleParticle(container)
+    }
+}
+
+const createSingleParticle = (container) => {
+    const particle = document.createElement('div')
+    particle.classList.add('particle')
+    
+    // Random starting position within container
+    const startX = Math.random() * container.offsetWidth
+    const startY = Math.random() * container.offsetHeight
+    particle.style.left = `${startX}px`
+    particle.style.top = `${startY}px`
+    
+    // Random movement distance
+    const moveX = (Math.random() - 0.5) * 200 // -100 to 100px
+    const moveY = (Math.random() - 0.5) * 200
+    particle.style.setProperty('--move-x', `${moveX}px`)
+    particle.style.setProperty('--move-y', `${moveY}px`)
+    
+    // Random duration and delay
+    const duration = 2 + Math.random() * 3 // 2-5 seconds
+    particle.style.animationDuration = `${duration}s`
+    particle.style.animationDelay = `${Math.random() * 2}s` // 0-2s delay
+    
+    container.appendChild(particle)
+    
+    // Replace particle when animation ends
+    particle.addEventListener('animationend', () => {
+        particle.remove()
+        createSingleParticle(container)
+    })
+}
+
+window.onload = () => {
+    createParticles()
+}
+</script>
+
+    <div
+        class="main-text-container"
+    >
+            <p
+                class="slogan"
+            >
+                Cybersecurity, <br> Redefined
+            </p>
+        <p
+            class="main-text mt-4"
+        >
+            XENA is designed for offensive cybersecurity, particularly for red team operations,
+            penetration testing, and adversary simulations. Making it suitable for professionals conducting security
+            assessments.
+        </p>
+        <div
+            class="mt-7"
+        >
+            <a
+    href="/pricing"
+    class="btn-round btn-outline"
+>
+    Get Started
+</a>
+        </div>
+    </div>
+
+    <div
+        id="xena-avatar"
+    >
+        <img src="images/xena-avatar.png">
+    </div>
+
+    <div
+    class="why-xena-container"
+>
+    <h2>
+        Why XENA?
+    </h2>
+
+    <p
+        class="why-xena-text"
+    >
+        XENA C2 empowers you with a versatile post-exploitation agent and a customizable command and control server
+        to simulate a stealthy, persistent adversary within your target network. Its flexible C2 infrastructure
+        allows you to adapt network communications, blending seamlessly with legitimate traffic to evade detection.
+        These capabilities enhance XENA’s streamlined red team operations, cross-platform accessibility across desktop,
+        web, and mobile interfaces, and its open-source framework, fostering community-driven innovation for advanced
+        penetration testing and adversary simulation.
+    </p>
+</div>
+
+<style>
+.why-xena-text {
+    font-size: 18px;
+}
+.why-xena-container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    padding-left: 20%;
+    padding-right: 20%;
+    top: 1000px;
+}
+</style>
+
+    <div
+    id="getting-started-container"
+>
+    <div
+        class="title"
+    >
+        <h1>
+            Getting Started
+        </h1>
+    </div>
+
+    <div
+        class="container"
+    >
+        <div
+            class="left"
+        >
+            <h2>
+                Community Edition
+            </h2>
+
+            <p class="text">
+                Free and <a class="free-and-open-source-label" href="https://github.com/zarkones/XENA">open-source</a>.
+                Equipped with a post-exploitation agent, command & control server, and a dark-themed elegant user interface. 
+            </p>
+        </div>
+
+        <div class="right">
+            <h2>
+                Premium Edition
+            </h2>
+
+            <p class="text">
+                Has everything which the community edition has, plus exclusive features and extended support. Includes an AI which can fully navigate command & control
+                infrastructure, engage targets, and accomplish strategic and operational objectives.
+            </p>
+        </div>
+    </div>
+
+    <div class="getting-started-btn">
+        <div>
+            <a
+    href="/pricing"
+    class="btn-round btn-outline"
+>
+    Get Started
+</a>
+        </div>
+    </div>
+</div>
+
+<style>
+#getting-started-container {
+    background-image: url(images/scifi-hologram-view-of-earth.jpg);
+    background-size: cover;
+    background-position: center;
+
+    .getting-started-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 42px;
+    }
+
+    .text {
+        font-size: 20px;
+    }
+
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        display: flex;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    .left {
+        width: 50%;
+        border-right: 1px solid #F8F8F2;
+        display: grid;
+        text-align: right;
+        padding-right: 6%;
+
+        .text {
+            margin-left: 30%;
+        }
+    }
+    .right {
+        padding-left: 6%;
+        width: 50%;
+
+        .text {
+            margin-right: 30%;
+        }
+    }
+
+    .free-and-open-source-label {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+}
+</style>
+
+    <div id="footer-container">
+    <div
+        class="useful-links"
+    >
+        <div
+            class="column"
+        >
+            <h4>Social</h4>
+
+            <div
+                class="links"
+            >
+                <a href="https://x.com/XenaCyberSec">X.com</a>
+                <a href="https://www.youtube.com/@zarkones2635">Youtube</a>
+                <a href="https://github.com/zarkones">Github</a>
+                <a href="https://www.linkedin.com/company/xena-cybersec">Linkedin</a>
+            </div>
+        </div>
+
+        <div
+            class="column"
+        >
+            <h4>Support</h4>
+
+            <div
+                class="links"
+            >
+                <a href="https://discord.gg/qjJwSh2TF9">Discord</a>
+            </div>
+        </div>
+
+        <div
+            class="column"
+        >
+            <h4>Resources</h4>
+
+            <div
+                class="links"
+            >
+                <a href="/blogs">Blog</a>
+            </div>
+        </div>
+
+        <!-- <div
+            class="column"
+        >
+            <h4>About</h4>
+
+        </div> -->
+    </div>
+</div>
+
+<style>
+#footer-container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin-left: 6%;
+    margin-right: 6%;
+
+    .slot-1 {
+        border-right: 1px solid #F8F8F2;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .useful-links {
+        display: flex;
+    }
+
+    .column {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+    }
+}
+</style>
+</div>
+
+<style>
+#page {
+    position: absolute;
+    top: 0px;
+}
+#xena-avatar {
+    position: absolute;
+    right: 4%;
+    top: 200px;
+    z-index: 120;
+    opacity: 1; 
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+    #xena-avatar {
+        opacity: 0.8;
+    }
+}
+
+@media (max-width: 992px) {
+    #xena-avatar {
+        opacity: 0.6;
+    }
+}
+
+@media (max-width: 768px) {
+    #xena-avatar {
+        opacity: 0.4;
+    }
+}
+
+@media (max-width: 576px) {
+    #xena-avatar {
+        opacity: 0.2;
+    }
+}
+.main-text-container {
+    position: absolute;
+    left: 20%;
+    top: 200px;
+}
+.main-text {
+    max-width: 38%;
+    word-spacing: 4px;
+    font-size: 24px;
+    text-shadow: black 1px 5px 5px;
+}
+.slogan {
+    font-size: 64px;
+    font-weight: bolder;
+    margin: 0px;
+}
+</style>
+</body>
+</html>
